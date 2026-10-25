@@ -14,11 +14,14 @@ function Signup() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Simulate successful registration by redirecting directly to the trading dashboard port (3001)
-    window.location.href = "http://localhost:3001";
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const dashboardUrl =
+    process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
+
+  window.location.href = dashboardUrl;
+};
 
   return (
     <div className="container mt-5 mb-5">
@@ -88,7 +91,15 @@ function Signup() {
             </form>
             <div className="text-center mt-3">
               <span className="text-muted fs-6">
-                Already have an account? <a href="http://localhost:3001" style={{ textDecoration: "none" }}>Log in here</a>
+                Already have an account? 
+                
+<a
+  href={process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001"}
+  style={{ textDecoration: "none" }}
+>
+  Log in here
+</a>
+
               </span>
             </div>
           </div>
