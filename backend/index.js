@@ -5,7 +5,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const { HoldingsModel } = require("./model/holdingsModel");
+const { HoldingsModel } = require("./model/HoldingsModel");
 const { PositionsModel } = require("./model/PositionsModel");
 const { OrdersModel } = require("./model/OrdersModel");
 
