@@ -1,5 +1,13 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
 body {
   margin: 0;
+  overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -12,29 +20,129 @@ code {
     monospace;
 }
 
-.nav-link{
-  margin-left: 40px;
+img {
+  max-width: 100%;
+  height: auto;
 }
 
-#supportHero{
+.navbar-logo {
+  width: 140px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.nav-link {
+  margin-left: 0;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+}
+
+.nav-link.active-route {
+  color: #387ed1 !important;
+  font-weight: 600;
+}
+
+.cta-btn {
+  display: inline-block;
+  min-width: 190px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-decoration: none;
+}
+
+.hero-img {
+  max-width: 780px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.universe-logo {
+  width: 55%;
+  max-width: 160px;
+  height: auto;
+}
+
+.universe-logo-compact {
+  width: 40%;
+  max-width: 130px;
+  height: auto;
+}
+
+.team-avatar {
+  border-radius: 50%;
+  width: 55%;
+  max-width: 240px;
+  height: auto;
+}
+
+#supportHero {
   background-color: rgb(56, 126, 209);
   color: white;
+  padding-bottom: 1.5rem;
 }
 
-#supportHero a{
-  color: white;
+#supportHero a,
+#supportHero .support-link-btn {
+  color: white !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
-#supportWrapper{
+#supportHero .support-link-btn:hover,
+#supportHero .support-link-btn:focus {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+#supportWrapper {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin: 0 150px;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-#supportHero input{
-  padding: 20px 50px;
+#supportHero input[type="search"] {
+  padding: 16px 22px;
   width: 100%;
-  font-size: 20px;
+  font-size: 1rem;
   border-radius: 10px;
   border: none;
+  color: #212529;
+  background-color: #ffffff;
+}
+
+#supportHero input[type="search"]:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.support-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 992px) {
+  .nav-link {
+    margin-left: 40px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  #supportHero input[type="search"] {
+    padding: 20px 30px;
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .cta-btn {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .navbar-logo {
+    width: 120px;
+  }
 }

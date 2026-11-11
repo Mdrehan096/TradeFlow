@@ -1,61 +1,79 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 function Navbar() {
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setIsNavOpen(false);
+  }, [pathname]);
+
+  const handleToggle = () => {
+    setIsNavOpen((prev) => !prev);
+  };
+
+  const closeMenu = () => {
+    setIsNavOpen(false);
+  };
+
+  const navLinkClass = ({ isActive }) =>
+    isActive ? "nav-link active-route" : "nav-link active";
+
   return (
     <nav
-      className="navbar navbar-expand-lg border-bottom"
+      className="navbar navbar-expand-lg border-bottom sticky-top"
       style={{ backgroundColor: "#FFF" }}
     >
       <div className="container p-2">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/" onClick={closeMenu}>
           <img
-            src="media/images/logo.svg"
-            style={{ width: "25%" }}
-            alt="Logo"
+            src="/media/images/logo.svg"
+            className="navbar-logo"
+            alt="TradeFlow Logo"
           />
         </Link>
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
-          aria-expanded="false"
+          aria-expanded={isNavOpen}
           aria-label="Toggle navigation"
+          onClick={handleToggle}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <form className="d-flex" role="search">
-            <ul className="navbar-nav mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link active" to="/signup">
-                  Signup
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link active" to="/about">
-                  About
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link active" to="/product">
-                  Product
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link active" to="/pricing">
-                  Pricing
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link active" to="/support">
-                  Support
-                </Link>
-              </li>
-            </ul>
-          </form>
+        <div
+          className={`collapse navbar-collapse${isNavOpen ? " show" : ""}`}
+          id="navbarSupportedContent"
+        >
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <NavLink className={navLinkClass} to="/signup" onClick={closeMenu}>
+                Signup
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className={navLinkClass} to="/about" onClick={closeMenu}>
+                About
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className={navLinkClass} to="/product" onClick={closeMenu}>
+                Product
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className={navLinkClass} to="/pricing" onClick={closeMenu}>
+                Pricing
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className={navLinkClass} to="/support" onClick={closeMenu}>
+                Support
+              </NavLink>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>

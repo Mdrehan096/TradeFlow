@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Stats() {
   return (
     <div className="container p-3">
-      <div className="row p-5">
-        <div className="col-6 p-5">
-          <h1 className="fs-2 mb-5">Trust with confidence</h1>
+      <div className="row p-2 p-md-5 align-items-center">
+        <div className="col-12 col-lg-6 p-3 p-md-5">
+          <h1 className="fs-2 mb-4 mb-md-5">Trust with confidence</h1>
           <h2 className="fs-4">Customer-first always</h2>
           <p className="text-muted">
             That's why 1.3+ crore customers trust Zerodha with ₹3.5+ lakh crores
@@ -28,18 +29,24 @@ function Stats() {
             money.
           </p>
         </div>
-        <div className="col-6 p-5">
+        <div className="col-12 col-lg-6 p-3 p-md-5 text-center">
           <img
-            src="media/images/ecosystem.png"
+            src="/media/images/ecosystem.png"
             alt="Zerodha investment ecosystem"
+            className="img-fluid"
             style={{ width: "90%" }}
           />
-          <div className="text-center">
-            <a href="/products" className="mx-5" style={{ textDecoration: "none" }}>
+          <div className="d-flex flex-wrap justify-content-center gap-3 gap-md-4 mt-3">
+            <Link to="/product" style={{ textDecoration: "none" }}>
               Explore our products{" "}
               <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-            </a>
-            <a href="https://kite.zerodha.com/" target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}>
+            </Link>
+            <a
+              href="https://kite.zerodha.com/"
+              target="_blank"
+              rel="noreferrer"
+              style={{ textDecoration: "none" }}
+            >
               Try Kite demo{" "}
               <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
             </a>

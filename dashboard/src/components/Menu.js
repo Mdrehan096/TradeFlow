@@ -1,98 +1,175 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-import { Link } from "react-router-dom";
+import { FRONTEND_URL } from "../config";
+
+const navItems = [
+  { label: "Dashboard", path: "/" },
+  { label: "Orders", path: "/orders" },
+  { label: "Holdings", path: "/holdings" },
+  { label: "Positions", path: "/positions" },
+  { label: "Funds", path: "/funds" },
+  { label: "Apps", path: "/apps" },
+];
 
 const Menu = () => {
-  const [selectedMenu, setSelectedMenu] = useState(0);
+  const location = useLocation();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mobileProfileRef = useRef(null);
+  const desktopProfileRef = useRef(null);
 
-  const handleMenuClick = (index) => {
-    setSelectedMenu(index);
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsProfileDropdownOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const clickedMobile =
+        mobileProfileRef.current && mobileProfileRef.current.contains(event.target);
+      const clickedDesktop =
+        desktopProfileRef.current && desktopProfileRef.current.contains(event.target);
+      if (!clickedMobile && !clickedDesktop) {
+        setIsProfileDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleProfileClick = () => {
+    setIsProfileDropdownOpen((prev) => !prev);
   };
-
-  const handleProfileClick = (index) => {
-    setIsProfileDropdownOpen(!isProfileDropdownOpen);
-  };
-
-  const menuClass = "menu";
-  const activeMenuClass = "menu selected";
 
   return (
     <div className="menu-container">
-     <img src="" alt="" />
-      <div className="menus">
+      <Link to="/" className="logo-link" aria-label="TradeFlow Dashboard Home">
+        <img src="/logo.png" alt="TradeFlow logo" className="logo" />
+      </Link>
+
+      <div className="menu-mobile-controls">
+        <div className="profile-wrapper" ref={mobileProfileRef}>
+          <button
+            type="button"
+            className="profile profile-trigger"
+            onClick={handleProfileClick}
+            aria-expanded={isProfileDropdownOpen}
+            aria-haspopup="menu"
+          >
+            <span className="avatar">ZU</span>
+            <span className="username">USERID</span>
+          </button>
+
+          {isProfileDropdownOpen && (
+            <div className="profile-dropdown" role="menu">
+              <div className="profile-dropdown-header">
+                <strong>TradeFlow User</strong>
+                <span>ID: USERID</span>
+              </div>
+              <Link
+                to="/funds"
+                className="profile-dropdown-item"
+                role="menuitem"
+                onClick={() => setIsProfileDropdownOpen(false)}
+              >
+                Funds &amp; Margin
+              </Link>
+              <Link
+                to="/orders"
+                className="profile-dropdown-item"
+                role="menuitem"
+                onClick={() => setIsProfileDropdownOpen(false)}
+              >
+                Order Book
+              </Link>
+              <a
+                href={FRONTEND_URL}
+                className="profile-dropdown-item"
+                role="menuitem"
+              >
+                Back to TradeFlow Home
+              </a>
+            </div>
+          )}
+        </div>
+
+        <button
+          type="button"
+          className="hamburger-btn"
+          aria-label="Toggle dashboard navigation"
+          aria-expanded={isMobileMenuOpen}
+          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+        >
+          <span className="hamburger-line" />
+          <span className="hamburger-line" />
+          <span className="hamburger-line" />
+        </button>
+      </div>
+
+      <div className={`menus${isMobileMenuOpen ? " open" : ""}`}>
         <ul>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/"
-              onClick={() => handleMenuClick(0)}
-            >
-              <p className={selectedMenu === 0 ? activeMenuClass : menuClass}>
-                Dashboard
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/orders"
-              onClick={() => handleMenuClick(1)}
-            >
-              <p className={selectedMenu === 1 ? activeMenuClass : menuClass}>
-                Orders
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/holdings"
-              onClick={() => handleMenuClick(2)}
-            >
-              <p className={selectedMenu === 2 ? activeMenuClass : menuClass}>
-                Holdings
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/positions"
-              onClick={() => handleMenuClick(3)}
-            >
-              <p className={selectedMenu === 3 ? activeMenuClass : menuClass}>
-                Positions
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="funds"
-              onClick={() => handleMenuClick(4)}
-            >
-              <p className={selectedMenu === 4 ? activeMenuClass : menuClass}>
-                Funds
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/apps"
-              onClick={() => handleMenuClick(6)}
-            >
-              <p className={selectedMenu === 6 ? activeMenuClass : menuClass}>
-                Apps
-              </p>
-            </Link>
-          </li>
+          {navItems.map((item) => {
+            const isSelected = location.pathname === item.path;
+            return (
+              <li key={item.path}>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={item.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <p className={isSelected ? "menu selected" : "menu"}>
+                    {item.label}
+                  </p>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
-        <hr />
-        <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
+        <hr className="menu-divider" />
+        <div className="profile-desktop-slot" ref={desktopProfileRef}>
+          <button
+            type="button"
+            className="profile profile-trigger"
+            onClick={handleProfileClick}
+            aria-expanded={isProfileDropdownOpen}
+            aria-haspopup="menu"
+          >
+            <span className="avatar">ZU</span>
+            <span className="username">USERID</span>
+          </button>
+
+          {isProfileDropdownOpen && (
+            <div className="profile-dropdown" role="menu">
+              <div className="profile-dropdown-header">
+                <strong>TradeFlow User</strong>
+                <span>ID: USERID</span>
+              </div>
+              <Link
+                to="/funds"
+                className="profile-dropdown-item"
+                role="menuitem"
+                onClick={() => setIsProfileDropdownOpen(false)}
+              >
+                Funds &amp; Margin
+              </Link>
+              <Link
+                to="/orders"
+                className="profile-dropdown-item"
+                role="menuitem"
+                onClick={() => setIsProfileDropdownOpen(false)}
+              >
+                Order Book
+              </Link>
+              <a
+                href={FRONTEND_URL}
+                className="profile-dropdown-item"
+                role="menuitem"
+              >
+                Back to TradeFlow Home
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>

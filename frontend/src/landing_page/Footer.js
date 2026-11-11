@@ -5,30 +5,31 @@ function Footer() {
 const textStyle = {
 textDecoration: "none",
 color: "#6c757d",
+display: "inline-block",
+lineHeight: "1.9",
 };
 
 const inactiveLinkStyle = {
 ...textStyle,
-display: "inline-block",
-lineHeight: "1.8",
 };
 
 return (
 <footer style={{ backgroundColor: "rgb(250, 250, 250)" }}>
-<div className="container border-top mt-5">
-<div className="row mt-5">
-<div className="col">
+<div className="container border-top mt-5 py-4">
+<div className="row mt-3">
+<div className="col-12 col-sm-6 col-lg-3 mb-4">
 <img
 src="/media/images/logo.svg"
 alt="TradeFlow logo"
-style={{ width: "50%" }}
+style={{ width: "55%", maxWidth: "150px" }}
+className="mb-3"
 />
-<p>
+<p className="text-muted small">
 © 2010 - 2024, Not Zerodha Broking Ltd. All rights reserved.
 </p>
 </div>
-<div className="col">
-        <p>Company</p>
+<div className="col-12 col-sm-6 col-lg-3 mb-4">
+        <p className="fw-semibold">Company</p>
         <Link to="/about" style={textStyle}>About</Link>
         <br />
         <Link to="/product" style={textStyle}>Products</Link>
@@ -46,8 +47,8 @@ style={{ width: "50%" }}
         <span style={inactiveLinkStyle}>Zerodha cares (CSR)</span>
       </div>
 
-      <div className="col">
-        <p>Support</p>
+      <div className="col-12 col-sm-6 col-lg-3 mb-4">
+        <p className="fw-semibold">Support</p>
         <span style={inactiveLinkStyle}>Contact</span>
         <br />
         <Link to="/support" style={textStyle}>Support portal</Link>
@@ -59,8 +60,8 @@ style={{ width: "50%" }}
         <span style={inactiveLinkStyle}>Downloads &amp; resources</span>
       </div>
 
-      <div className="col">
-        <p>Account</p>
+      <div className="col-12 col-sm-6 col-lg-3 mb-4">
+        <p className="fw-semibold">Account</p>
         <Link to="/signup" style={textStyle}>Open an account</Link>
         <br />
         <span style={inactiveLinkStyle}>Fund transfer</span>

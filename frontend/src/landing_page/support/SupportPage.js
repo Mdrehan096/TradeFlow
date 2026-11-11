@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Hero from "./Hero";
 import CreateTicket from "./CreateTicket";
 
 function SupportPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
   return (
     <>
-      <Hero />
-      <CreateTicket />
+      <Hero searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+      <CreateTicket searchQuery={searchQuery} />
     </>
   );
 }
